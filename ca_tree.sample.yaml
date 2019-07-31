@@ -1,0 +1,6 @@
+---
+- id: ca_root
+  name: Root Authority
+  sub:
+    - id: ca_users
+      name: Users CA

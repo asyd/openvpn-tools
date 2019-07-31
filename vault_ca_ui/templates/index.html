@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="container main-container">
+        {% for root in cas recursive %}
+            <ul>
+                <li>
+                    <h{{ loop.depth }}>
+                        <a href="{{ url_for('root.ca_list_certificates', ca=root.id) }}">{{ root.name }}</a>
+                    </h{{ loop.depth }}>
+                </li>
+                {% if root.sub %}
+                    {{ loop(root.sub) }}
+                {% endif %}
+            </ul>
+        {% endfor %}
+    </div>
+{% endblock %}

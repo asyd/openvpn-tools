@@ -1,0 +1,29 @@
+{% extends "bootstrap/base.html" %}
+{% block styles -%}
+{{ super() }}  {# do not forget to call super or Bootstrap's own stylesheets
+will disappear! #}
+<link rel="stylesheet" type="text/css"
+      href="{{ url_for('static', filename='custom.css') }}">
+{% endblock %}
+
+{% block navbar %}
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                    aria-expanded="false" aria-controls="navbar">
+            </button>
+            <a class="navbar-brand" href="{{ url_for('root.index') }}">Authorities</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div><!--/.nav-collapse -->
+    </div>
+</nav>
+{% endblock %}
+
+{% block content %}
+    <h1>Hello, Bootstrap toto</h1>
+{% endblock %}

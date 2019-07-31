@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="container main-container">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Common Name</th>
+                <th>Serial number</th>
+                <th>Start date</th>
+                <th>End date</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for cert in certs %}
+                <tr>
+                    <td> {{ cert.common_name }}</td>
+                    <td> <a href="{{ url_for('root.get_certificate', ca=ca, serial=cert.serial_number, cn=cert.common_name) }}">
+                        {{ cert.serial_number|replace('-',':') }} </a>
+                    </td>
+                    <td> {{ cert.start_date }}</td>
+                    <td> {{ cert.end_date }}</td>
+                    <td>
+                        {% if cert.status == 'valid' %}
+                            <span class="label label-success">Active</span>
+                        {% elif cert.status == 'expired' %}
+                            <span class="label label-warning">Expired</span>
+                        {% else %}
+                            <span class="label label-danger">{{ cert.revocation_date.strftime('%Y-%m-%d %H:%M') }}</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if cert.status == 'valid' %}
+                            <a href="{{ url_for('root.revoke_cert', ca=ca, serial=cert.serial_number) }}">
+                                <span class="glyphicon glyphicon-minus-sign"></span>
+                                Revoke
+                            </a>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
